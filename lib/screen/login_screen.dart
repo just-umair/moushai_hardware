@@ -1,40 +1,121 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    Color hexToColor(String code) {
-      return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
-    }
+  _LoginScreenState createState() => _LoginScreenState();
+}
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 3,
-          width: MediaQuery.of(context).size.width,
-          child: Image.asset('images/login.png'),
-        ),
-        const Padding(padding: EdgeInsets.only(top: 50)),
-        ElevatedButton.icon(
+class _LoginScreenState extends State<LoginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final paddingValue = MediaQuery
+        .of(context)
+        .size
+        .height / 30;
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: MediaQuery
+                .of(context)
+                .size
+                .height / 3,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            child: Image.asset('images/login.png'),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: paddingValue),
+          ),
+          SizedBox(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width / 2,
+            child: TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Email',
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: paddingValue),
+          ),
+          SizedBox(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width / 2,
+            child: TextField(
+              obscureText: true,
+              controller: passwordController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Password',
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: paddingValue),
+          ),
+          ElevatedButton.icon(
             onPressed: () {
-              // ignore: avoid_print
-              print('Yes I am pressed');
+              if (passwordController.text == 'test' &&
+                  emailController.text == 'test') {
+                // ignore: avoid_print
+                print('Login');
+              } else {
+                // ignore: avoid_print
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(
+                      // Retrieve the text the user has entered by using the
+                      // TextEditingController.
+                      content: Text('Incorrect Email or Password'),
+                    );
+                  },
+                );
+              }
             },
             icon: Icon(
-              Icons.mail,
+              Icons.login,
               color: Colors.white,
-              size: MediaQuery.of(context).size.height / 15,
+              size: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 15,
             ),
-            label:  Text(
-              'Gmail',
+            label: Text(
+              'Login',
               style: TextStyle(
-                fontSize: MediaQuery.of(context).size.height / 15,
+                fontSize: MediaQuery
+                    .of(context)
+                    .size
+                    .height / 15,
               ),
-            ))
-      ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
