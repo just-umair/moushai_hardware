@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+
+//Screen
+import 'package:moushai_hardware/screen/home_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -80,8 +84,10 @@ class _LoginScreenState extends State<LoginScreen> {
             onPressed: () {
               if (passwordController.text == 'test' &&
                   emailController.text == 'test') {
-                // ignore: avoid_print
-                print('Login');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
               } else {
                 // ignore: avoid_print
                 showDialog(
